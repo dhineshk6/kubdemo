@@ -5,7 +5,7 @@ node {
     	stage('checkout'){
         
         mvnHome = tool 'M3'
-        git url: 'https://github.com/prakashg1984/workplace.git'
+        git url: 'https://github.com/dhineshk6/kubdemo.git'
     
         sh "git rev-parse HEAD > .git/commit-id"
         def commit_id = readFile('.git/commit-id').trim()
@@ -18,13 +18,13 @@ node {
     	}
     	
     	stage('create docker image'){
-		        sh 'docker login --username prakashg84 --password kashprag0712'
+		        sh 'docker login --username dhineshk6 --password Docker@1234'
 		        sh ("docker build -t testnewproject .")
-		        sh ("docker tag  testnewproject prakashg84/test:testnewproject")
+		        sh ("docker tag  testnewproject dhineshk6/test:testnewproject")
     	}
     	
     	stage('push docker image'){
-			sh ("docker push prakashg84/test:testnewproject")
+			sh ("docker push dhineshk6/test:testnewproject")
     	}
     	
     	stage('create deployment'){
