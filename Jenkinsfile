@@ -1,24 +1,10 @@
 node {
-    docker.withRegistry('https://hub.docker.com/', 'docker-hub-credentials') {
-    	def mvnHome
-    	
-    	stage('checkout'){
-        
-        mvnHome = tool 'M3'
-        git url: 'https://github.com/dhineshk6/kubdemo.git'
-    
-        sh "git rev-parse HEAD > .git/commit-id"
-        def commit_id = readFile('.git/commit-id').trim()
-        println commit_id
-        }
-    
-    dir('testnewproject'){
         stage('build'){
-	        sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install"
+	        sh "mvn -Dmaven.test.failure.ignore clean install"
     	}
     	
     	stage('create docker image'){
-		        sh 'docker login --username dhineshk6 --password Docker@1234'
+		        
 		        sh ("docker build -t testnewproject .")
 		        sh ("docker tag  testnewproject dhineshk6/test:testnewproject")
     	}
@@ -37,5 +23,3 @@ node {
 	    sh 'kubectl create -f services.yaml --validate=false'
     	}
     }
-    }
-}
