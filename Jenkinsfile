@@ -3,7 +3,7 @@ node {
 		sh "git clone https://github.com/dhineshk6/kubdemo.git"
 	}
         stage('build'){
-	        sh "mvn -Dmaven.test.failure.ignore clean install"
+	        sh "mvn -f /var/lib/jenkins/workspace/kubedemo/kubdemo clean install"
     	}
     	
     	stage('create docker image'){
